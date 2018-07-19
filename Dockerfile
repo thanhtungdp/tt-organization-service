@@ -21,4 +21,5 @@ COPY . /opt/app
 # so that signals are passed properly. Note the code in index.js is needed to catch Docker signals
 # using node here is still more graceful stopping then npm with --init afaik
 
+EXPOSE 3000
 CMD [ "npm", "start"]

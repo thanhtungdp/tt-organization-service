@@ -17,27 +17,27 @@ services:
       - ./package.json:/opt/package.json
       - ./yarn.lock:/opt/yarn.lock
       - notused:/opt/app/node_modules
-    labels:
-      - "traefik.enable=true"
-      - "traefik.backend=client"
-      - "traefik.port=3000"
-      - "traefik.frontend.entryPoints=http"
-      - "traefik.frontend.rule=PathPrefix:/clean/"
+#    labels:
+#      - "traefik.enable=true"
+#      - "traefik.backend=client"
+#      - "traefik.port=3000"
+#      - "traefik.frontend.entryPoints=http"
+#      - "traefik.frontend.rule=PathPrefix:/clean/"
 # HostRegexp: {subdomain:[a-z]+}.api.localhost
 
   mongo:
     image: mongo
     volumes:
       - /data/db:/data/db
-
-  traefik:
-    image: traefik
-    command: --api --web --docker --accessLog --logLevel=INFO --docker.exposedbydefault=false
-    ports:
-      - "80:80"
-      - "8080:8080"
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-      - /dev/null:/traefik.toml
+#
+#  traefik:
+#    image: traefik
+#    command: --api --web --docker --accessLog --logLevel=INFO --docker.exposedbydefault=false
+#    ports:
+#      - "80:80"
+#      - "8080:8080"
+#    volumes:
+#      - /var/run/docker.sock:/var/run/docker.sock
+#      - /dev/null:/traefik.toml
 volumes:
     notused:
