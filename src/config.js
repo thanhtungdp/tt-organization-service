@@ -1,4 +1,4 @@
 module.exports = {
-  serviceName: 'clean',
+  serviceName: 'organization',
   mongodbUrl: process.env.MONGODB_URL
 }
