@@ -6,7 +6,9 @@
     "dev": "NODE_PATH=./src micro-dev src/boot.js --ignore .idea --ignore logs",
     "start": "NODE_ENV=production NODE_PATH=./src micro",
     "test": "NODE_PATH=./src ava",
-    "fixcode": "prettier-standard src/**/*.js && standard --fix"
+    "overwrite": "prettier-standard src/**/*.js",
+    "lint": "standard --fix",
+    "fixcode": "yarn run lint && yarn run overwrite"
   },
   "husky": {
     "hooks": {
