@@ -11,10 +11,9 @@ module.exports = router(
       handleErrors(req => ({
         name: req.params.slug,
         slug: req.params.slug,
-        dbInfo:
-          'mongodb://' + process.env.NODE_ENV === 'docker'
-            ? 'mongo'
-            : 'localhost' + ':27017/micro-user'
+        dbInfo: process.env.IS_DOCKER
+          ? 'mongodb://mongo:27017/micro-user'
+          : 'mongodb://localhost:27017/micro-user'
       }))
     ),
     get('/*', () => config.serviceName)
