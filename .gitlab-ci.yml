@@ -1,0 +1,43 @@
+cache:
+  key: "${CI_BUILD_REF_NAME} node:10-alpine"
+  paths:
+  - node_modules/
+
+stages:
+  - test
+  - build
+
+test:
+  stage: test
+  image: node:10-alpine
+  variables:
+    NODE_ENV: "development"
+  before_script:
+    - apk add --update bash
+    - apk add --update git && rm -rf /tmp/* /var/cache/apk/*
+    - yarn install
+  script:
+    - npm run lint
+    - npm run test
+  artifacts:
+    paths:
+     - src/
+
+build:
+  stage: build
+  image: docker:latest
+  only:
+    - "releases/staging"
+  services:
+    - docker:dind
+  variables:
+    DOCKER_DRIVER: "overlay"
+  before_script:
+    - docker version
+    - "docker info"
+    - "docker login -u $REGISTRY_USER -p $REGISTRY_PASSWORD"
+  script:
+    - "docker build -t ${REGISTRY_USER}/${CI_PROJECT_NAME}:staging ."
+    - "docker push ${REGISTRY_USER}/${CI_PROJECT_NAME}:staging"
+  after_script:
+    - "docker logout"
