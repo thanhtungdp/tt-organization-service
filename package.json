@@ -10,16 +10,8 @@
     "lint": "standard --fix",
     "fixcode": "yarn run lint && yarn run overwrite"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "npm run fixcode && npm run test"
-    }
-  },
   "env": {
     "NODE_ENV": "production"
-  },
-  "xo": {
-    "extends": "prettier"
   },
   "dependencies": {
     "@bit/tungtung.micro.components.amqp": "^0.0.1",
@@ -40,7 +32,6 @@
     "prettier-standard": "^8.0.1",
     "url": "^0.11.0",
     "micro-dev": "latest",
-    "husky": "^1.0.0-rc.13",
     "prettier": "1.5.3",
     "request": "^2.87.0",
     "request-promise": "^4.2.2",
