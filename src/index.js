@@ -1,23 +1,22 @@
-const { router, get, withNamespace } = require('microrouter')
+const { router, get, post, withNamespace } = require('microrouter')
 const { handleErrors } = require('@bit/tungtung.micro.components.micro-boom')
-const config = require('config')
+const { connect } = require('@bit/tungtung.micro.components.mongo')
+const config = require('./config')
+const userRoute = require('./routes/userRoute')
+const internalRoute = require('./routes/internalRoute')
 
 const namespace = withNamespace(`/${config.serviceName}`)
+const publicNamespace = withNamespace(`/${config.serviceName}/public`)
+
+connect(config.mongodbUrl)
 
 module.exports = router(
-  namespace(
-    get(
-      '/:slug',
-      handleErrors(req => ({
-        name: req.params.slug,
-        slug: req.params.slug,
-        dbInfo: process.env.IS_DOCKER
-          ? 'mongodb://mongo:27017/micro-user'
-          : 'mongodb://localhost:27017/micro-user'
-      }))
-    ),
-    get('/*', () => config.serviceName)
+  publicNamespace(
+    get('/', () => 'public'),
+    post('/register', handleErrors(userRoute.register))
   ),
+  namespace(get('/*', () => config.serviceName)),
   get('/health', () => 'Working...'),
+  get('/:slug', handleErrors(internalRoute.getOrganization)),
   get('/*', () => config.serviceName)
 )

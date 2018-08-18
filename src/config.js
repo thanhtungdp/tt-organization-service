@@ -1,4 +1,6 @@
 module.exports = {
   serviceName: 'organization',
-  mongodbUrl: process.env.MONGODB_URL
+  prefixDb: 'tungtung_',
+  mongodbUrl: process.env.ORGANIZATION_MONGODB,
+  mongodbCustomer: process.env.MONGODB_CUSTOMER
 }
