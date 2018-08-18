@@ -12,6 +12,9 @@ test:
   image: node:10-alpine
   variables:
     NODE_ENV: "development"
+    ORGANIZATION_MONGODB: "mongodb://mongo/tungtung_admin"
+  services:
+    - mongo
   before_script:
     - apk add --update bash
     - apk add --update git && rm -rf /tmp/* /var/cache/apk/*
